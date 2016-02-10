@@ -31,16 +31,17 @@ OK             spec                   7.97s     96.9 test coverage
 OK             yard                   1.46s     100.0 documented
 ```
 
-so that I did not need to dig through the results to determine if I was satisfied.   
-Only if they did not did I want to see detailed output from a given command.
+so that I did not need to dig through the results to determine if I was satisfied.   Only if they failed did I want to see detailed output from a given command.
 
-RakeCommandFilter handles this case, and can be easily extended to process the output of other tools.
+RakeCommandFilter does this, and can be extended to process the output of other tools.
 
 ## Usage
 
 Put this in your Rakefile, then run ```rake full_validation```.
 
 ```ruby
+require 'rake_command_filter'
+
 RakeCommandFilter::RakeTask.new(:full_validation) do
   desc 'Run full validation'
   run_definition(RakeCommandFilter::RubocopCommandDefinition.new)
