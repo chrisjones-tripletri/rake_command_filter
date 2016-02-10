@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/chrisjones-tripletri/rake_command_filter.svg?branch=master)](https://travis-ci.org/chrisjones-tripletri/rake_command_filter)
+[![Code Climate](https://codeclimate.com/github/chrisjones-tripletri/rake_command_filter/badges/gpa.svg)](https://codeclimate.com/github/chrisjones-tripletri/rake_command_filter)
+[![Test Coverage](https://codeclimate.com/github/chrisjones-tripletri/rake_command_filter/badges/coverage.svg)](https://codeclimate.com/github/chrisjones-tripletri/rake_command_filter/coverage)
+
 # RakeCommandFilter
 
 RakeCommandFilter allows you to execute multiple rake commands in subprocesses and filter
