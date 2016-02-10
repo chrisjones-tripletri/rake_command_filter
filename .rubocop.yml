@@ -1,0 +1,10 @@
+AllCops:
+  Exclude:
+    - Guardfile
+    - test_cases/**/*
+
+Metrics/LineLength:
+  Max: 110
+
+Style/RedundantReturn:
+  Enabled: false

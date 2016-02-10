@@ -1,0 +1,13 @@
+/.bundle/
+/.yardoc
+/Gemfile.lock
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+/test_files/yard/fail/doc
+/test_files/yard/ok/doc
+/test_files/yard/warn/doc
+/test_files/rspec/ok/coverage
