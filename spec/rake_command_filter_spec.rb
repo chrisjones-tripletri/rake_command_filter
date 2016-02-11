@@ -27,7 +27,7 @@ describe RakeCommandFilter do
       execute_result_message(self,
                              command,
                              RakeCommandFilter::MATCH_FAILURE,
-                             RakeCommandFilter::RubocopCommandDefinition.failure_msg(3, 1))
+                             RakeCommandFilter::RubocopCommandDefinition.failure_msg(2, 1))
     end
   end
 

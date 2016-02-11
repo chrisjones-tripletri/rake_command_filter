@@ -7,8 +7,6 @@
 RakeCommandFilter allows you to execute multiple rake commands in subprocesses and filter
 their output for easy review.
 
-Test Change 2
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -55,6 +53,15 @@ RakeCommandFilter::RakeTask.new(:full_validation) do
   run_definition(RakeCommandFilter::YardCommandDefinition.new)
 end
 ```
+
+If you setup a rake command like that above, you can use this as a git pre-commit hook:
+
+```bash
+#!/bin/bash                                                                                                                                        
+rake full_validation
+exit $?
+```
+in order to see the nice output whenever you commit.
 
 ## Customization
 
