@@ -1,3 +1,4 @@
+[![Gem Version](https://badge.fury.io/rb/rake_command_filter.svg)](https://badge.fury.io/rb/rake_command_filter)
 [![Build Status](https://travis-ci.org/chrisjones-tripletri/rake_command_filter.svg?branch=master)](https://travis-ci.org/chrisjones-tripletri/rake_command_filter)
 [![Code Climate](https://codeclimate.com/github/chrisjones-tripletri/rake_command_filter/badges/gpa.svg)](https://codeclimate.com/github/chrisjones-tripletri/rake_command_filter)
 [![Test Coverage](https://codeclimate.com/github/chrisjones-tripletri/rake_command_filter/badges/coverage.svg)](https://codeclimate.com/github/chrisjones-tripletri/rake_command_filter/coverage)
