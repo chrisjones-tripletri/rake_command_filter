@@ -113,7 +113,7 @@ describe RakeCommandFilter do
       task.run_main_task(false)
     end
     Dir.chdir("#{RUBOCOP_FOLDER}/fail") do
-      task.run_main_task(false)
+      expect { task.run_main_task(false) }.to raise_error RakeCommandFilter::CommandFailedError
     end
   end
 
@@ -125,7 +125,7 @@ describe RakeCommandFilter do
       end
     end
     Dir.chdir("#{YARD_FOLDER}/warn") do
-      task.run_main_task(false)
+      expect { task.run_main_task(false) }.to raise_error RakeCommandFilter::CommandFailedError
     end
   end
 
@@ -140,9 +140,9 @@ describe RakeCommandFilter do
     line_bad = RakeCommandFilter::LineFilterResult.new(:test, :no_such_result, nil)
     expect { line_bad.severity }.to raise_error(ArgumentError)
   end
-  
-  it 'fails intentionally' do
-    expect(2).to eq(1)
-  end
-  
+
+  #
+  #   it 'fails intentionally' do
+  #     expect(2).to eq(1)
+  #   end
 end

@@ -9,6 +9,7 @@ require_relative './rake_command_definition'
 require_relative './rubocop_command_definition'
 require_relative './rspec_command_definition'
 require_relative './yard_command_definition'
+require_relative './command_failed_error'
 
 # A rake task that filters the output of other rake tasks so you can see
 # what you care about.
@@ -85,8 +86,18 @@ module RakeCommandFilter
     end
 
     def run_tasks(_verbose)
-      @commands.each(&:execute)
-      return 1
+      failure = nil
+      @commands.each do |command|
+        results = command.execute
+        worst = CommandDefinition.find_worst_result(results)
+        if !worst.empty? && worst[0].severity > 0
+          failure = worst[0]
+          break
+        end
+      end
+
+      # raise an error so that the rake task will return 1 to the shell
+      raise CommandFailedError, failure.message if failure
     end
   end
 end

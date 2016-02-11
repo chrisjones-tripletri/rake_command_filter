@@ -30,6 +30,24 @@ module RakeCommandFilter
       @parameters << param
     end
 
+    # override this method
+    def execute
+    end
+
+    # @return the most severe result from an array of results
+    def self.find_worst_result(results)
+      worst = []
+      results.each do |result|
+        if worst.empty? || worst.first.severity < result.severity
+          worst = [result]
+        elsif worst.first.severity == result.severity
+          worst << result
+        end
+      end
+      worst = result_failure('INTERNAL ERROR: no pattern matched a result in the output') if worst.empty?
+      return worst
+    end
+
     protected
 
     # @return a result indicating the command was successful
@@ -42,15 +60,16 @@ module RakeCommandFilter
       create_result(RakeCommandFilter::MATCH_FAILURE, msg)
     end
 
+    # @return a result indicating the command showed a warning.
     def result_warning(msg)
       create_result(RakeCommandFilter::MATCH_WARNING, msg)
     end
 
+    private
+
     def create_result(result, msg)
       LineFilterResult.new(@name, result, msg)
     end
-
-    private
 
     def execute_system(command)
       saved_lines = []
@@ -81,7 +100,7 @@ module RakeCommandFilter
     end
 
     def output_results(results, saved_lines, command_start)
-      worst_results = find_worst_result(results)
+      worst_results = CommandDefinition.find_worst_result(results)
       # if the lines
       if worst_results[0].result != RakeCommandFilter::MATCH_SUCCESS &&
          @default_line_handling == RakeCommandFilter::LINE_HANDLING_HIDE_UNTIL_ERROR
@@ -92,19 +111,6 @@ module RakeCommandFilter
           result.output(Time.now - command_start) unless result.result == RakeCommandFilter::MATCH_WARNING
         end
       end
-    end
-
-    def find_worst_result(results)
-      worst = []
-      results.each do |result|
-        if worst.empty? || worst.first.severity < result.severity
-          worst = [result]
-        elsif worst.first.severity == result.severity
-          worst << result
-        end
-      end
-      worst = result_failure('INTERNAL ERROR: no pattern matched a result in the output') if worst.empty?
-      return worst
     end
 
     def match_line(line, results)
