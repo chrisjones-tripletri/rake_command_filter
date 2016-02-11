@@ -7,7 +7,7 @@
 RakeCommandFilter allows you to execute multiple rake commands in subprocesses and filter
 their output for easy review.
 
-Test Change
+Test Change 2
 
 ## Installation
 
