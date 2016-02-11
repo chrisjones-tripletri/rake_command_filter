@@ -141,8 +141,7 @@ describe RakeCommandFilter do
     expect { line_bad.severity }.to raise_error(ArgumentError)
   end
 
-  #
-  #   it 'fails intentionally' do
-  #     expect(2).to eq(1)
-  #   end
+  it 'fails intentionally' do
+    expect(2).to eq(1)
+  end
 end
