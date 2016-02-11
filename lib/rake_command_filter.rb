@@ -57,11 +57,7 @@ module RakeCommandFilter
       desc 'TODO: FILL THIS IN THE BLOCK WHERE YOU CREATE THE TASK'
 
       instance_eval(&task_block)
-      task(name, *args) do |_, _task_args|
-        RakeFileUtils.send(:verbose, verbose) do
-          run_main_task(verbose)
-        end
-      end
+      run_task(name, *args)
     end
 
     # call this to run a {CommandDefinition} subclass
@@ -80,6 +76,18 @@ module RakeCommandFilter
     end
 
     private
+
+    def run_task(name, *args)
+      task(name, *args) do |_, _task_args|
+        RakeFileUtils.send(:verbose, verbose) do
+          begin
+            run_main_task(verbose)
+          rescue
+            exit 1
+          end
+        end
+      end
+    end
 
     def add_command(command)
       @commands << command
