@@ -9,6 +9,7 @@ require_relative './rake_command_definition'
 require_relative './rubocop_command_definition'
 require_relative './rspec_command_definition'
 require_relative './yard_command_definition'
+require_relative './scss_lint_command_definition'
 require_relative './command_failed_error'
 
 # A rake task that filters the output of other rake tasks so you can see

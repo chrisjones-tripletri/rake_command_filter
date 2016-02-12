@@ -18,11 +18,11 @@ module RakeCommandFilter
 
       # just use sensible defaults here.
       add_filter(:offenses_filter, /(\d+)\s+file.*,\s+(\d+)\s+offense/) do |matches|
-        result_failure(RubocopCommandDefinition.failure_msg(matches[1], matches[0]))
+        CommandDefinition.result_failure(RubocopCommandDefinition.failure_msg(matches[1], matches[0]))
       end
 
       add_filter(:no_offenses_filter, /(\d+)\s+file.*,\s+no\s+offenses/) do |matches|
-        result_success(RubocopCommandDefinition.success_msg(matches[0]))
+        CommandDefinition.result_success(RubocopCommandDefinition.success_msg(matches[0]))
       end
     end
   end

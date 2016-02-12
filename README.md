@@ -49,6 +49,9 @@ require 'rake_command_filter'
 
 RakeCommandFilter::RakeTask.new(:full_validation) do
   desc 'Run full validation'
+  run_definition(RakeCommandFilter::RubocopCommandDefinition.new) do
+    add_parameter('app/assets/stylesheets')
+  end
   run_definition(RakeCommandFilter::RubocopCommandDefinition.new)
   run_definition(RakeCommandFilter::RSpecCommandDefinition.new)
   run_definition(RakeCommandFilter::YardCommandDefinition.new)

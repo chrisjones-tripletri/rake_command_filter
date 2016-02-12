@@ -5,6 +5,7 @@ describe RakeCommandFilter do
   RUBOCOP_FOLDER = "#{TESTCASE_FOLDER}/rubocop".freeze
   YARD_FOLDER = "#{TESTCASE_FOLDER}/yard".freeze
   RSPEC_FOLDER = "#{TESTCASE_FOLDER}/rspec".freeze
+  SCSS_FOLDER = "#{TESTCASE_FOLDER}/scss".freeze
 
   # rubocop:disable AbcSize
   def execute_result_message(rspec, command, expected, msg)
@@ -86,6 +87,26 @@ describe RakeCommandFilter do
     end
   end
 
+  it 'detects scss warnings', scss: true do
+    Dir.chdir("#{SCSS_FOLDER}/fail") do
+      command = create_command(RakeCommandFilter::ScssLintCommandDefinition.new)
+      execute_result_message(self,
+                             command,
+                             RakeCommandFilter::MATCH_WARNING,
+                             RakeCommandFilter::ScssLintCommandDefinition.warning_msg)
+    end
+  end
+
+  it 'detects scss ok', scss: true do
+    Dir.chdir("#{SCSS_FOLDER}/ok") do
+      command = create_command(RakeCommandFilter::ScssLintCommandDefinition.new)
+      execute_result_message(self,
+                             command,
+                             RakeCommandFilter::MATCH_SUCCESS,
+                             'No errors.')
+    end
+  end
+
   it 'detects rspec success' do
     Dir.chdir("#{RSPEC_FOLDER}/ok") do
       command = create_command(RakeCommandFilter::RSpecCommandDefinition.new)
@@ -129,7 +150,7 @@ describe RakeCommandFilter do
     end
   end
 
-  it 'tests line-filter severity', focus: true do
+  it 'tests line-filter severity' do
     line_ok   = RakeCommandFilter::LineFilterResult.new(:test, RakeCommandFilter::MATCH_SUCCESS, nil)
     line_warn = RakeCommandFilter::LineFilterResult.new(:test, RakeCommandFilter::MATCH_WARNING, nil)
     line_fail = RakeCommandFilter::LineFilterResult.new(:test, RakeCommandFilter::MATCH_FAILURE, nil)

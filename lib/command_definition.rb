@@ -32,6 +32,7 @@ module RakeCommandFilter
 
     # override this method
     def execute
+      return execute_system(@name)
     end
 
     # @return the most severe result from an array of results
@@ -44,32 +45,30 @@ module RakeCommandFilter
           worst << result
         end
       end
-      worst = result_failure('INTERNAL ERROR: no pattern matched a result in the output') if worst.empty?
       return worst
     end
 
-    protected
-
     # @return a result indicating the command was successful
-    def result_success(msg)
+    def self.result_success(msg)
       create_result(RakeCommandFilter::MATCH_SUCCESS, msg)
     end
 
     # @return a result indicating the command failed.
-    def result_failure(msg)
+    def self.result_failure(msg)
       create_result(RakeCommandFilter::MATCH_FAILURE, msg)
     end
 
     # @return a result indicating the command showed a warning.
-    def result_warning(msg)
+    def self.result_warning(msg)
       create_result(RakeCommandFilter::MATCH_WARNING, msg)
     end
 
-    private
-
-    def create_result(result, msg)
+    # used to create a result with the specified result code and msg
+    def self.create_result(result, msg)
       LineFilterResult.new(@name, result, msg)
     end
+
+    private
 
     def execute_system(command)
       saved_lines = []
@@ -100,17 +99,27 @@ module RakeCommandFilter
     end
 
     def output_results(results, saved_lines, command_start)
+      results << create_default_result if results.empty?
       worst_results = CommandDefinition.find_worst_result(results)
+
       # if the lines
-      if worst_results[0].result != RakeCommandFilter::MATCH_SUCCESS &&
-         @default_line_handling == RakeCommandFilter::LINE_HANDLING_HIDE_UNTIL_ERROR
-        print_lines(saved_lines)
-      end
+      output_lines(worst_results, saved_lines)
       unless @default_line_handling == RakeCommandFilter::LINE_HANDLING_HIDE_ALWAYS
         worst_results.each do |result|
           result.output(Time.now - command_start) unless result.result == RakeCommandFilter::MATCH_WARNING
         end
       end
+    end
+
+    def output_lines(worst_results, saved_lines)
+      if worst_results[0].result != RakeCommandFilter::MATCH_SUCCESS &&
+         @default_line_handling == RakeCommandFilter::LINE_HANDLING_HIDE_UNTIL_ERROR
+        print_lines(saved_lines)
+      end
+    end
+
+    def create_default_result
+      CommandDefinition.result_failure('INTERNAL ERROR: no pattern matched a result in the output')
     end
 
     def match_line(line, results)

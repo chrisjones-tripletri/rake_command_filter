@@ -31,9 +31,9 @@ module RakeCommandFilter
       add_filter(:rspec_filter, /(\d+)\s+example[s]?,\s+(\d+)\s+failure/) do |matches|
         failures = matches[1].to_i
         if failures > 0
-          result_failure(RSpecCommandDefinition.failure_msg(failures))
+          CommandDefinition.result_failure(RSpecCommandDefinition.failure_msg(failures))
         else
-          result_success(RSpecCommandDefinition.success_msg(matches[0]))
+          CommandDefinition.result_success(RSpecCommandDefinition.success_msg(matches[0]))
         end
       end
     end
@@ -42,7 +42,11 @@ module RakeCommandFilter
       add_filter(:simplecov_filter, /Coverage.+LOC\s+\((\d+[\.]?\d+)%/) do |matches|
         percent = matches[0].to_f
         msg = RSpecCommandDefinition.coverage_msg(percent)
-        (percent >= coverage_threshold) ? result_success(msg) : result_failure(msg)
+        if percent >= coverage_threshold
+          CommandDefinition.result_success(msg)
+        else
+          CommandDefinition.result_failure(msg)
+        end
       end
     end
   end
