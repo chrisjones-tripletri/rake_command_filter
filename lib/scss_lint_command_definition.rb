@@ -18,9 +18,9 @@ module RakeCommandFilter
       add_filter(:scss_error, /(.*\[(.)\].*)/) do |matches|
         kind = matches[1]
         if kind == 'W'
-          CommandDefinition.result_warning(ScssLintCommandDefinition.warning_msg)
+          result_warning(ScssLintCommandDefinition.warning_msg)
         else
-          CommandDefinition.result_failure(ScssLintCommandDefinition.error_msg)
+          result_failure(ScssLintCommandDefinition.error_msg)
         end
       end
     end
@@ -28,7 +28,7 @@ module RakeCommandFilter
     protected
 
     def create_default_result
-      CommandDefinition.result_success('No errors.')
+      result_success('No errors.')
     end
   end
 end

@@ -22,10 +22,10 @@ module RakeCommandFilter
       add_filter(:yard_percentage, /(\d+.?\d+)%\s+document/) do |matches|
         percent = matches[0].to_f
         msg = YardCommandDefinition.percent_msg(percent)
-        (percent >= threshold) ? CommandDefinition.result_success(msg) : CommandDefinition.result_failure(msg)
+        (percent >= threshold) ? result_success(msg) : result_failure(msg)
       end
       add_filter(:yard_warning, /\[warn\]:(.*)/) do |_matches|
-        CommandDefinition.result_warning(YardCommandDefinition.warning_msg)
+        result_warning(YardCommandDefinition.warning_msg)
       end
     end
   end

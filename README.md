@@ -47,9 +47,9 @@ Put this in your Rakefile, then run ```rake full_validation```.
 ```ruby
 require 'rake_command_filter'
 
-RakeCommandFilter::RakeTask.new(:full_validation) do
+RakeCommandFilter::RakeTask.new(:validate) do
   desc 'Run full validation'
-  run_definition(RakeCommandFilter::RubocopCommandDefinition.new) do
+  run_definition(RakeCommandFilter::ScssLintCommandDefinition.new) do
     add_parameter('app/assets/stylesheets')
   end
   run_definition(RakeCommandFilter::RubocopCommandDefinition.new)

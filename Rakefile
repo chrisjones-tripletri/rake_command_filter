@@ -8,7 +8,7 @@ RSpec::Core::RakeTask.new(:spec)
 RuboCop::RakeTask.new(:rubocop)
 YARD::Rake::YardocTask.new(:yard)
 
-RakeCommandFilter::RakeTask.new(:full_validation) do
+RakeCommandFilter::RakeTask.new(:validate) do
   desc 'Run full validation'
   run_definition(RakeCommandFilter::RubocopCommandDefinition.new)
   run_definition(RakeCommandFilter::RSpecCommandDefinition.new)

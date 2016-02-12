@@ -48,23 +48,25 @@ module RakeCommandFilter
       return worst
     end
 
+    protected
+
     # @return a result indicating the command was successful
-    def self.result_success(msg)
+    def result_success(msg)
       create_result(RakeCommandFilter::MATCH_SUCCESS, msg)
     end
 
     # @return a result indicating the command failed.
-    def self.result_failure(msg)
+    def result_failure(msg)
       create_result(RakeCommandFilter::MATCH_FAILURE, msg)
     end
 
     # @return a result indicating the command showed a warning.
-    def self.result_warning(msg)
+    def result_warning(msg)
       create_result(RakeCommandFilter::MATCH_WARNING, msg)
     end
 
     # used to create a result with the specified result code and msg
-    def self.create_result(result, msg)
+    def create_result(result, msg)
       LineFilterResult.new(@name, result, msg)
     end
 

@@ -31,9 +31,9 @@ module RakeCommandFilter
       add_filter(:rspec_filter, /(\d+)\s+example[s]?,\s+(\d+)\s+failure/) do |matches|
         failures = matches[1].to_i
         if failures > 0
-          CommandDefinition.result_failure(RSpecCommandDefinition.failure_msg(failures))
+          result_failure(RSpecCommandDefinition.failure_msg(failures))
         else
-          CommandDefinition.result_success(RSpecCommandDefinition.success_msg(matches[0]))
+          result_success(RSpecCommandDefinition.success_msg(matches[0]))
         end
       end
     end
@@ -43,9 +43,9 @@ module RakeCommandFilter
         percent = matches[0].to_f
         msg = RSpecCommandDefinition.coverage_msg(percent)
         if percent >= coverage_threshold
-          CommandDefinition.result_success(msg)
+          result_success(msg)
         else
-          CommandDefinition.result_failure(msg)
+          result_failure(msg)
         end
       end
     end
